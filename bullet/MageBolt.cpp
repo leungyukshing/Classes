@@ -1,6 +1,6 @@
 #include "MageBolt.h"
 #include "UI/GameManager.h"
-
+#include "RotateWithAction.h"
 bool MageBolt::init()
 {
 	if (!Sprite::init())
@@ -14,33 +14,35 @@ bool MageBolt::init()
 
 void MageBolt::shoot()
 {
-	/*auto bombPostion = this->getPosition() + this->getParent()->getPosition();
-	Sprite* target = nullptr;
+	Node* target = nullptr;
 	auto instance = GameManager::getInstance();
 	auto tower = this->getParent();
 	auto monsterVector = instance->monsterVector;
 	double  min_dis = 1000000.0f;
 	for (int i = 0; i < monsterVector.size(); i++) {
 		auto monster = monsterVector.at(i);
+		auto sprite = monster->baseSprite;
+
 		auto towerPos = tower->getPosition();
-		double temp_dis = towerPos.distance(monster->getPosition());
+		double temp_dis = towerPos.distance(sprite->getPosition());
+
 		if (temp_dis < min_dis) {
 			target = monster;
 			min_dis = temp_dis;
+			//auto spritepos = monster->getPosition();
+
 		}
 	}
-	auto dist = target->getPosition();
-	auto mt = ParabolaTo::create(1.0f, (CCPoint)bombPostion, (CCPoint)dist);
-	bulletAction = Spawn::create(mt);
-	runAction(Sequence::create(bulletAction,
-		CallFuncN::create(CC_CALLBACK_0(MageBolt::removeBullet, this)),
-		NULL));*/
+	auto dist = ((BaseMonster*)target)->baseSprite->getPosition();
+	auto mt = MoveTo::create(0.5f, dist-getParent()->getPosition());
+	auto rtt = RotateWithAction::create(0.5);
 
-	runAction(Sequence::create(bulletAction,
+	auto bulletAction0 = Spawn::create(mt, rtt, NULL);
+	runAction(Sequence::create(bulletAction0,
 		CallFuncN::create(CC_CALLBACK_0(MageBolt::removeBullet, this)),
 		NULL));
+	
 }
-
 void MageBolt::removeBullet()
 {
 	GameManager *instance = GameManager::getInstance();

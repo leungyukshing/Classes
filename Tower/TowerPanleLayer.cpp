@@ -67,7 +67,7 @@ void TowerPanleLayer::onTouchEnded(Touch * touch, Event * event)
 
 void TowerPanleLayer::inAnimation()
 {
-	//SoundManager::playTowerMenu();
+	 
 	planesprite->runAction(Sequence::create(ScaleTo::create(0.1f, 1.0f, 1.0f),
 		CallFuncN::create(CC_CALLBACK_0(TowerPanleLayer::addIcons, this)),
 		NULL));
@@ -118,11 +118,6 @@ void TowerPanleLayer::addTempTower(int type)
 		tempTower->setPosition(Point(0, 25));
 		static_cast<BaseMap*>(this->getParent()->getParent())->playerState->showTowerInfo(ARCHER_1);}
 			 break;
-	/*case(2): {
-		tempTower = Sprite::createWithSpriteFrameName("tower_preview_barrack.png");
-		tempTower->setPosition(Point(0, 25));
-		static_cast<BaseMap*>(this->getParent()->getParent())->playerState->showTowerInfo(BARAACKS_1);}
-			 break;*/
 	case(3): {
 		tempTower = Sprite::createWithSpriteFrameName("tower_preview_mage.png");
 		tempTower->setPosition(Point(0, 10));
@@ -154,7 +149,8 @@ void TowerPanleLayer::addTower(int type)
 		arrowTower->setTag(terrain->getTag());
 		arrowTower->setMyTerrain(terrain);
 		terrain->addChild(arrowTower);
-		GameManager::getInstance()->MONEY = GameManager::getInstance()->MONEY - arrowTower->getBuildMoney();
+		if (GameManager::getInstance()->mode == false)
+			GameManager::getInstance()->MONEY = GameManager::getInstance()->MONEY - arrowTower->getBuildMoney();
 	}
 			 break;
 	case(1): {
@@ -163,7 +159,8 @@ void TowerPanleLayer::addTower(int type)
 		arrowTower->setTag(terrain->getTag());
 		arrowTower->setMyTerrain(terrain);
 		terrain->addChild(arrowTower);
-		GameManager::getInstance()->MONEY = GameManager::getInstance()->MONEY - arrowTower->getBuildMoney();
+		if (GameManager::getInstance()->mode == false)
+			GameManager::getInstance()->MONEY = GameManager::getInstance()->MONEY - arrowTower->getBuildMoney();
 	}
 			 break;
 	case(4): {
@@ -172,7 +169,8 @@ void TowerPanleLayer::addTower(int type)
 		artilleryTower->setTag(terrain->getTag());
 		artilleryTower->setMyTerrain(terrain);
 		terrain->addChild(artilleryTower);
-		GameManager::getInstance()->MONEY = GameManager::getInstance()->MONEY - artilleryTower->getBuildMoney();
+		if (GameManager::getInstance()->mode == false)
+			GameManager::getInstance()->MONEY = GameManager::getInstance()->MONEY - artilleryTower->getBuildMoney();
 	}
 			 break;
 	case(3): 		
@@ -181,11 +179,12 @@ void TowerPanleLayer::addTower(int type)
 		mageTower->setTag(terrain->getTag());
 		mageTower->setMyTerrain(terrain);
 		terrain->addChild(mageTower);
-		GameManager::getInstance()->MONEY = GameManager::getInstance()->MONEY - mageTower->getBuildMoney();
+		if(GameManager::getInstance()->mode == false)
+			GameManager::getInstance()->MONEY = GameManager::getInstance()->MONEY - mageTower->getBuildMoney();
 		break;
 	}
 	
-	//SoundManager::playTowerBuilding();
+	 
 	isBuilt = true;
 	terrain->isBuilt = true;
 	terrain->terrain->setVisible(false);

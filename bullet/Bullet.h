@@ -1,10 +1,12 @@
 #pragma once
-//#include "SoundManager.h" 
+  
 #include "cocos2d.h"
 
 #include "ui/GameManager.h"
+#include "Monster/BaseMonster.h"
 #include "bullet/ParabolaTo.h"
 USING_NS_CC;
+using namespace cocos2d;
 class Bullet : public Sprite
 {
 public:
